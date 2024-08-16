@@ -1,20 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../store/slices/cart-slice";
 
-
 export default function ProductTile({ product }) {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state);
 
+  // Handle adding the product to the cart
   function handleAddToCart() {
     dispatch(addToCart(product));
   }
 
+  // Handle removing the product from the cart
   function handleRemoveFromCart() {
     dispatch(removeFromCart(product.id));
   }
 
-  // Helper function to format the price as currency
+  // Helper function to format the price as currency (USD)
   function formatPrice(price) {
     return price.toLocaleString("en-US", {
       style: "currency",
@@ -22,14 +23,18 @@ export default function ProductTile({ product }) {
     });
   }
 
-  // Determine button classes based on cart state
+  // Determine if the product is already in the cart
   const isInCart = cart.some((item) => item.id === product.id);
+
+  // Determine button classes based on whether the product is in the cart
   const buttonClass = isInCart
     ? "bg-red-600 text-white border-red-200 neon-red"
     : "bg-green-500 text-white border-green-600 neon-green";
+
   return (
     <div>
-      <div className="group flex flex-col items-center border-2 border-white-900 gap-3 p-4 h-[400px] mt-10 ml-5 rounded-xl card-hover ">
+      {/* Product card container */}
+      <div className="group flex flex-col items-center border-2 border-white-900 gap-3 p-4 h-[400px] mt-10 ml-5 rounded-xl card-hover">
         {/* Product Image */}
         <div className="h-[180px]">
           <img
